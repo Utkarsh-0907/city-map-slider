@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Country Explorer</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVjZVh5ox9i-BEgv_rnizdiXnDA1OzQws"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <button id="toggler" class="hamburger">&#9776;</button>
+            <div id="country-info">
+                <h1 id="country-name">Country Name</h1>
+                <p id="country-description">Description of the country.</p>
+                <button id="more-info">More Info</button>
+            </div>
+            <div id="city-menu" class="city-menu hidden"></div>
+        </div>
+        <div class="right">
+            <div id="map" class="map"></div>
+        </div>
+    </div>
+    <div class="slider">
+        <button class="arrow arrow-left">&#9664;</button>
+        <div class="city-names">
+            <div class="city-name" id="current-country">Country 1</div>
+            <div class="city-name" id="next-country-1">Country 2</div>
+            <div class="city-name" id="next-country-2">Country 3</div>
+        </div>
+        <button class="arrow arrow-right">&#9654;</button>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

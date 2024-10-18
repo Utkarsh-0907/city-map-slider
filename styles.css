@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    position: relative; 
+}
+
+.left {
+    width: 35%;
+    padding: 20px;
+    background: url('https://www.thestatesman.com/wp-content/uploads/2022/02/iStock-165204592.jpg') no-repeat center center;
+    background-size: cover;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left; 
+}
+
+.hamburger {
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
+    z-index: 2;
+}
+
+.city-menu {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    padding: 10px;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    z-index: 2;
+}
+
+.city-menu.hidden {
+    display: none;
+}
+
+.city-option {
+    padding: 10px;
+    cursor: pointer;
+    color: black;
+    text-align: left;
+}
+
+.city-option:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#country-info {
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+}
+
+.right {
+    width: 65%;
+}
+
+.map {
+    height: 100%; 
+    z-index: 0;
+}
+
+.slider {
+    display: flex;
+    align-items: center;
+    position: absolute; 
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    z-index: 4;
+}
+
+.city-names {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.city-names::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: -1;
+}
+
+.city-name {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.city-name::after {
+    content: '';
+    width: 2px;
+    height: 20px;
+    background-color: white;
+    margin-left: 5px;
+}
+
+.arrow {
+    font-size: 30px;
+    background: white;
+    border: none;
+    color: black;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.arrow-left {
+    margin-right: auto;
+}
+
+.arrow-right {
+    margin-left: auto;
+}
+
+.arrow:hover {
+    background: violet;
+    color: white;
+}

@@ -1,0 +1,68 @@
+[
+    {
+      "name": "Washington",
+      "description": "Known for its diverse landscapes and vibrant cities.",
+      "coordinates": { "lat": 47.7511, "lng": -120.7401 },
+      "countryBounds": [
+        [49.002494, -124.848974],
+        [49.002494, -116.916474],
+        [45.543541, -116.916474],
+        [45.543541, -124.848974]
+      ],
+      "backgroundImage": "url('https://ihitthebutton.com/wp-content/uploads/2013/09/us-capitol-sunset.jpg')",
+      "cafes": [
+        { "name": "Café Campagne", "coordinates": { "lat": 47.6097, "lng": -122.3420 } },
+        { "name": "Tilikum Place Café", "coordinates": { "lat": 47.6205, "lng": -122.3397 } },
+        { "name": "Morsel", "coordinates": { "lat": 47.6237, "lng": -122.3034 } }
+      ]
+    },
+    {
+      "name": "Virginia",
+      "description": "Rich in history and natural beauty.",
+      "coordinates": { "lat": 37.5183, "lng": -78.6682 },
+      "countryBounds": [
+        [39.4662, -75.2405],
+        [39.4662, -82.6446],
+        [36.5408, -82.6446],
+        [36.5408, -75.2405]
+      ],
+      "backgroundImage": "url('https://www.state.gov/wp-content/uploads/2022/01/shutterstock_661239940-scaled.jpg')",
+      "cafes": [
+        { "name": "The Red Rooster", "coordinates": { "lat": 37.2649, "lng": -79.8781 } },
+        { "name": "The Green Room", "coordinates": { "lat": 38.4241, "lng": -78.8144 } }
+      ]
+    },
+    {
+      "name": "New Jersey",
+      "description": "Famous for its beaches and rich history.",
+      "coordinates": { "lat": 40.2989, "lng": -74.5210 },
+      "countryBounds": [
+        [41.3573, -74.4057],
+        [41.3573, -73.8933],
+        [38.9332, -73.8933],
+        [38.9332, -74.4057]
+      ],
+      "backgroundImage": "url('https://www.guideoftheworld.com/wp-content/uploads/2018/03/the_skyline_of_jersey_city.jpg')",
+      "cafes": [
+        { "name": "The Coffee Shop", "coordinates": { "lat": 40.7184, "lng": -74.0734 } },
+        { "name": "Rook Coffee", "coordinates": { "lat": 40.3677, "lng": -74.0324 } }
+      ]
+    },
+    {
+      "name": "New York",
+      "description": "Known for its iconic skyline and vibrant culture.",
+      "coordinates": { "lat": 40.7128, "lng": -74.0060 },
+      "countryBounds": [
+        [45.01585, -74.25573],
+        [45.01585, -73.7004],
+        [40.4774, -73.7004],
+        [40.4774, -74.25573]
+      ],
+      "backgroundImage": "url('https://fthmb.tqn.com/46kRLp_KEU0hds9MhIGBNyAhQT4=/1889x1591/filters:fill(auto,1)/GettyImages-585245881-56fbf9393df78c7841b17ef7.jpg')",
+      "cafes": [
+        { "name": "Joe Coffee Company", "coordinates": { "lat": 40.7311, "lng": -74.0061 } },
+        { "name": "Cafe Grumpy", "coordinates": { "lat": 40.6702, "lng": -73.9624 } }
+      ]
+    }
+  ]
+  
