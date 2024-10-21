@@ -1,68 +1,393 @@
 [
-    {
-      "name": "Washington",
-      "description": "Known for its diverse landscapes and vibrant cities.",
-      "coordinates": { "lat": 47.7511, "lng": -120.7401 },
-      "countryBounds": [
+  {
+    "name": "Washington",
+    "description": "Washington is a state located in the Pacific Northwest region of the United States, known for its diverse geography that includes coastal landscapes, rainforests, mountains, and urban areas. Its capital is Olympia, while Seattle, its largest city, is a hub for technology and culture. Washington is famous for its natural beauty, including Mount Rainier, the Olympic National Park, and the San Juan Islands.",
+    "coordinates": { "lat": 47.7511, "lng": -120.7401 },
+    "countryBounds": [
         [49.002494, -124.848974],
-        [49.002494, -116.916474],
-        [45.543541, -116.916474],
+        [49.002494, -116.916031],
+        [45.543541, -116.916031],
         [45.543541, -124.848974]
-      ],
-      "backgroundImage": "url('https://ihitthebutton.com/wp-content/uploads/2013/09/us-capitol-sunset.jpg')",
-      "cafes": [
-        { "name": "Café Campagne", "coordinates": { "lat": 47.6097, "lng": -122.3420 } },
-        { "name": "Tilikum Place Café", "coordinates": { "lat": 47.6205, "lng": -122.3397 } },
-        { "name": "Morsel", "coordinates": { "lat": 47.6237, "lng": -122.3034 } }
-      ]
-    },
-    {
-      "name": "Virginia",
-      "description": "Rich in history and natural beauty.",
-      "coordinates": { "lat": 37.5183, "lng": -78.6682 },
-      "countryBounds": [
-        [39.4662, -75.2405],
-        [39.4662, -82.6446],
-        [36.5408, -82.6446],
-        [36.5408, -75.2405]
-      ],
-      "backgroundImage": "url('https://www.state.gov/wp-content/uploads/2022/01/shutterstock_661239940-scaled.jpg')",
-      "cafes": [
-        { "name": "The Red Rooster", "coordinates": { "lat": 37.2649, "lng": -79.8781 } },
-        { "name": "The Green Room", "coordinates": { "lat": 38.4241, "lng": -78.8144 } }
-      ]
-    },
-    {
-      "name": "New Jersey",
-      "description": "Famous for its beaches and rich history.",
-      "coordinates": { "lat": 40.2989, "lng": -74.5210 },
-      "countryBounds": [
-        [41.3573, -74.4057],
-        [41.3573, -73.8933],
-        [38.9332, -73.8933],
-        [38.9332, -74.4057]
-      ],
-      "backgroundImage": "url('https://www.guideoftheworld.com/wp-content/uploads/2018/03/the_skyline_of_jersey_city.jpg')",
-      "cafes": [
-        { "name": "The Coffee Shop", "coordinates": { "lat": 40.7184, "lng": -74.0734 } },
-        { "name": "Rook Coffee", "coordinates": { "lat": 40.3677, "lng": -74.0324 } }
-      ]
-    },
-    {
-      "name": "New York",
-      "description": "Known for its iconic skyline and vibrant culture.",
-      "coordinates": { "lat": 40.7128, "lng": -74.0060 },
-      "countryBounds": [
-        [45.01585, -74.25573],
-        [45.01585, -73.7004],
-        [40.4774, -73.7004],
-        [40.4774, -74.25573]
-      ],
-      "backgroundImage": "url('https://fthmb.tqn.com/46kRLp_KEU0hds9MhIGBNyAhQT4=/1889x1591/filters:fill(auto,1)/GettyImages-585245881-56fbf9393df78c7841b17ef7.jpg')",
-      "cafes": [
-        { "name": "Joe Coffee Company", "coordinates": { "lat": 40.7311, "lng": -74.0061 } },
-        { "name": "Cafe Grumpy", "coordinates": { "lat": 40.6702, "lng": -73.9624 } }
-      ]
-    }
+    ],
+    "backgroundImage": "url('https://ihitthebutton.com/wp-content/uploads/2013/09/us-capitol-sunset.jpg')",
+    "cafes": [
+        {
+            "name": "Pike Place Market Coffee",
+            "coordinates": { "lat": 47.6097, "lng": -122.3420 },
+            "images": [
+                "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+                "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+                "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+                "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+            ],
+            "description": "A historic coffee shop located in the famous Pike Place Market."
+        },
+        {
+            "name": "Victrola Coffee Roasters",
+            "coordinates": { "lat": 47.6101, "lng": -122.3200 },
+            "images": [
+                "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+                "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+                "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+                "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+            ],
+            "description": "Renowned for its artisanal coffee and inviting atmosphere."
+        },
+        {
+            "name": "Caffe Vita",
+            "coordinates": { "lat": 47.6238, "lng": -122.3244 },
+            "images": [
+                "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+                "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+                "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+                "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+            ],
+            "description": "A local chain known for its commitment to quality coffee and sustainability."
+        },
+        {
+            "name": "Café Campagne",
+            "coordinates": { "lat": 47.6106, "lng": -122.3430 },
+            "images": [
+                "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+                "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+                "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+                "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+            ],
+            "description": "A charming French café known for its pastries and coffee."
+        },
+        {
+            "name": "Café Allegro",
+            "coordinates": { "lat": 47.6403, "lng": -122.3037 },
+            "images": [
+                "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+                "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+                "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+                "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+            ],
+            "description": "A beloved local cafe known for its rich espresso and community vibe."
+        },
+        {
+            "name": "Bluebeard Coffee Roasters",
+            "coordinates": { "lat": 47.2945, "lng": -122.6467 },
+            "images": [
+                "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+                "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+                "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+                "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+            ],
+            "description": "An artisanal coffee roaster located in the heart of Tacoma."
+        },
+        {
+            "name": "Brewed Awakenings",
+            "coordinates": { "lat": 48.1391, "lng": -122.6263 },
+            "images": [
+                "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+                "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+                "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+                "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+            ],
+            "description": "A cozy café known for its warm atmosphere and great coffee."
+        },
+        {
+            "name": "Coffee Vault",
+            "coordinates": { "lat": 46.5929, "lng": -121.5123 },
+            "images": [
+                "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+                "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+                "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+                "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+            ],
+            "description": "A small-town gem serving delicious coffee and baked goods."
+        }
+    ]
+},
+
+{
+  "name": "Virginia",
+  "description": "Virginia, a state in the southeastern U.S., is rich in American history, home to Jamestown, the first permanent English settlement, and several Civil War battlefields. Its capital, Richmond, played a key role during the Confederacy. The state features diverse landscapes, from the Blue Ridge Mountains to the Atlantic coast and Chesapeake Bay. Northern Virginia is also a significant economic hub, with proximity to Washington, D.C., and a strong presence of government and tech industries.",
+  "coordinates": { "lat": 37.4316, "lng": -78.6569 },
+  "countryBounds": [
+      [39.4664, -75.2239],
+      [39.4664, -80.5187],
+      [36.5407, -80.5187],
+      [36.5407, -75.2239]
+  ],
+  "backgroundImage": "url('https://www.state.gov/wp-content/uploads/2022/01/shutterstock_661239940-scaled.jpg')",
+  "cafes": [
+      {
+          "name": "The Daily Grind",
+          "coordinates": { "lat": 37.5407, "lng": -77.4360 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A cozy spot with a great selection of coffee and light bites."
+      },
+      {
+          "name": "Scoop Café",
+          "coordinates": { "lat": 37.5370, "lng": -77.4305 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "This quaint cafe features homemade desserts and specialty coffees."
+      },
+      {
+          "name": "The Coffee Spot",
+          "coordinates": { "lat": 37.6463, "lng": -77.4189 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A local favorite, known for its strong brews and inviting atmosphere."
+      },
+      {
+          "name": "Café Periwinkle",
+          "coordinates": { "lat": 38.4240, "lng": -77.9779 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A delightful spot in Fredericksburg, known for its artistic atmosphere."
+      },
+      {
+          "name": "Café Caturra",
+          "coordinates": { "lat": 37.7800, "lng": -77.2620 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A vibrant café in the Short Pump area, popular for its coffee and pastries."
+      },
+      {
+          "name": "Brewed Awakenings",
+          "coordinates": { "lat": 36.8492, "lng": -76.2874 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A local favorite in Virginia Beach, known for its cozy vibe and great coffee."
+      },
+      {
+          "name": "Daily Grind Coffee House",
+          "coordinates": { "lat": 38.0336, "lng": -78.5080 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A popular café in Charlottesville with a wide range of coffees and snacks."
+      }
   ]
+},
+
   
+{
+  "name": "New York",
+  "description": "New York, a prominent state in the northeastern U.S., is famous for its iconic metropolis, New York City, which serves as a global center for finance, culture, and fashion. Home to landmarks like Times Square, Central Park, and the Statue of Liberty, the city attracts millions of tourists each year. Outside the city, the state offers stunning natural beauty, including the Adirondack Mountains, the Finger Lakes, and Niagara Falls. Rich in history, New York played a pivotal role in the founding of the United States and continues to influence global trends and innovations.",
+  "coordinates": { "lat": 40.7128, "lng": -74.0060 },
+  "countryBounds": [
+      [45.01585, -74.84668],
+      [45.01585, -71.11914],
+      [40.4774, -71.11914],
+      [40.4774, -74.84668]
+  ],
+  "backgroundImage": "url('https://fthmb.tqn.com/46kRLp_KEU0hds9MhIGBNyAhQT4=/1889x1591/filters:fill(auto,1)/GettyImages-585245881-56fbf9393df78c7841b17ef7.jpg')",
+  "cafes": [
+      {
+          "name": "Stumptown Coffee Roasters",
+          "coordinates": { "lat": 40.7425, "lng": -73.9897 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A popular coffee shop known for its strong brews and vibrant atmosphere."
+      },
+      {
+          "name": "Birch Coffee",
+          "coordinates": { "lat": 40.7400, "lng": -73.9920 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A cozy spot for coffee lovers, known for its friendly service."
+      },
+      {
+          "name": "Cafe Grumpy",
+          "coordinates": { "lat": 40.6794, "lng": -73.9535 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "Known for its artisanal coffee and welcoming environment."
+      },
+      {
+          "name": "Gimme! Coffee",
+          "coordinates": { "lat": 42.4560, "lng": -76.5160 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A specialty coffee roaster in Ithaca, celebrated for its sustainable sourcing."
+      },
+      {
+          "name": "The Coffee Bar",
+          "coordinates": { "lat": 42.6526, "lng": -73.7562 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A favorite in Albany, serving local pastries and excellent brews."
+      },
+      {
+          "name": "Mud Coffee",
+          "coordinates": { "lat": 40.7045, "lng": -73.9505 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A laid-back coffee shop in the East Village, known for its unique blends."
+      },
+      {
+          "name": "Caffe Panna",
+          "coordinates": { "lat": 40.7359, "lng": -73.9941 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "An ice cream shop that serves delicious coffee concoctions."
+      },
+      {
+          "name": "Blue Bottle Coffee",
+          "coordinates": { "lat": 40.7651, "lng": -73.9803 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "Known for its single-origin coffee and minimalist aesthetic."
+      },
+      {
+          "name": "Brewed Awakenings",
+          "coordinates": { "lat": 42.9935, "lng": -73.7066 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A cozy café in the Hudson Valley known for its great views and coffee."
+      }
+  ]
+}
+,
+{
+  "name": "New Jersey",
+  "description": "New Jersey, located in the northeastern U.S., is known for its bustling urban areas, beautiful shorelines along the Jersey Shore, and diverse cultural offerings. Its cities, like Newark and Jersey City, are major economic centers, while its proximity to New York City and Philadelphia makes it a vital commuter hub. The state has a strong industrial and pharmaceutical presence, along with a rich agricultural history, earning it the nickname 'The Garden State.' New Jersey also boasts several historic sites and vibrant suburban communities.",
+  "coordinates": { "lat": 40.2989, "lng": -74.5210 },
+  "countryBounds": [
+      [41.3573, -74.8487],
+      [41.3573, -73.8937],
+      [38.9367, -73.8937],
+      [38.9367, -74.8487]
+  ],
+  "backgroundImage": "url('https://www.guideoftheworld.com/wp-content/uploads/2018/03/the_skyline_of_jersey_city.jpg')",
+  "cafes": [
+      {
+          "name": "Rook Coffee",
+          "coordinates": { "lat": 40.2132, "lng": -74.0615 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A popular local chain known for its exceptional coffee."
+      },
+      {
+          "name": "Haven Artisan Coffee",
+          "coordinates": { "lat": 40.4973, "lng": -74.2643 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "Known for its artisanal coffee and cozy atmosphere."
+      },
+      {
+          "name": "The Coffee House",
+          "coordinates": { "lat": 40.7537, "lng": -74.2896 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A charming café in Westfield, perfect for a relaxing coffee break."
+      },
+      {
+          "name": "Coffee 4 U",
+          "coordinates": { "lat": 40.2942, "lng": -74.7469 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A drive-thru coffee spot popular for quick service."
+      },
+      {
+          "name": "The Bean",
+          "coordinates": { "lat": 40.7282, "lng": -74.0747 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A hip café in Hoboken, known for its creative coffee drinks."
+      },
+      {
+          "name": "Brewed Awakening",
+          "coordinates": { "lat": 39.8409, "lng": -74.3587 },
+          "images": [
+              "https://resizer.otstatic.com/v2/photos/wide-xlarge/1/29677267.jpg",
+              "https://images.squarespace-cdn.com/content/v1/5628546de4b0c53c5afc82ac/1639704984791-S1O9WD93JHV8CA2RS5LX/PICT0222.jpg",
+              "https://s3-media0.fl.yelpcdn.com/bphoto/qiHioDYWWas3oQq86V8lcQ/l.jpg",
+              "https://img2.10bestmedia.com/Images/Photos/64544/p-cafe-campagne-dessert-seattle_55_660x440_201405301646.jpg"
+          ],
+          "description": "A beloved café in Cape May, popular for its beachy vibe."
+      }
+  ]
+}
+
+]

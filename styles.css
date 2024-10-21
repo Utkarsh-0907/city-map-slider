@@ -13,13 +13,35 @@ body {
 .left {
     width: 35%;
     padding: 20px;
-    background: url('https://www.thestatesman.com/wp-content/uploads/2022/02/iStock-165204592.jpg') no-repeat center center;
     background-size: cover;
     color: white;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     text-align: left; 
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; 
+    position: relative; 
+    overflow: hidden; 
+    
+}
+
+.left::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1; 
+}
+.left > * {
+    position: relative; 
+    z-index: 2; 
+}
+.left.hidden {
+    opacity: 0; 
+    transform: translateX(-20px); 
 }
 
 .hamburger {
@@ -32,21 +54,60 @@ body {
     z-index: 2;
 }
 
-.city-menu {
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 5px;
-    padding: 10px;
+.close-button {
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    color: black;
+    cursor: pointer;
     position: absolute;
-    top: 60px;
+    top: 10px; 
+    right: 10px; 
+    z-index: 3; 
+}
+
+.city-menu {
+    display: none; 
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    padding: 20px;
+    position: absolute;
+    top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 2;
+    overflow-y: auto; 
+    opacity: 0; 
+    transform: translateY(-20px); 
+    transition: opacity 0.5s ease, transform 0.5s ease; 
+}
+
+.city-menu.visible {
+    display: flex; 
+    opacity: 1; 
+    transform: translateY(0); 
+    padding-top: 50px;
+
 }
 
 .city-menu.hidden {
     display: none;
 }
+
+
+
+
+.city-menu h1 {
+    cursor: pointer;
+    margin: 10px 0; 
+}
+
+
+/* .city-menu.hidden {
+    display: none;
+} */
 
 .city-option {
     padding: 10px;
@@ -63,10 +124,17 @@ body {
     display: flex;
     flex-direction: column;
     z-index: 2;
+    position: absolute;
+    bottom: 150px;
+    padding: 10px;
+    padding-right: 15px;
+
+
 }
 
 .right {
     width: 65%;
+    /* margin-left: 2px; */
 }
 
 .map {
@@ -93,7 +161,7 @@ body {
     text-align: center;
     color: white;
     font-weight: bold;
-    margin-top: 10px;
+    /* margin-top: 15px; */
 }
 
 .city-names::before {
@@ -110,16 +178,20 @@ body {
 .city-name {
     position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 3px;
+    cursor: pointer;
+
 }
 
 .city-name::after {
     content: '';
     width: 2px;
-    height: 20px;
+    height: 50px;
     background-color: white;
     margin-left: 5px;
+    justify-content: space-between;
 }
 
 .arrow {
@@ -150,3 +222,97 @@ body {
     background: violet;
     color: white;
 }
+
+.info-window {
+    padding: 10px;
+    max-width: 300px;
+}
+
+.info-window .slider-container {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.info-window .slider {
+    margin-bottom: 10px;
+}
+
+.info-window .slider img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.info-window h3 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+}
+
+.info-window p {
+    margin: 0;
+    font-size: 14px;
+    
+    
+}
+
+.slick-dots {
+    bottom: 5px;
+    color:black;
+
+}
+
+.slick-dots li button:before {
+    font-size: 8px;
+    color:black;
+}
+
+
+
+.slick-prev,
+.slick-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    background-color: rgba(0, 0, 0, 0.7); 
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+    background-color: rgba(0, 0, 0, 0.9); 
+}
+
+.slick-prev {
+    left: 5px;
+    color: black;
+}
+
+.slick-next {
+    right: 5px;
+    color: black;
+}
+.slick-prev:before,
+.slick-next:before {
+    font-family: 'slick';
+    font-size: 24px; 
+    line-height: 1;
+    color: white;
+}
+
+.slick-prev:before {
+    content: '←';
+}
+
+.slick-next:before {
+    content: '→';
+}
+

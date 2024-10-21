@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="styles.css">
     <title>Country Explorer</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVjZVh5ox9i-BEgv_rnizdiXnDA1OzQws"></script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
 </head>
 <body>
     <div class="container">
@@ -14,10 +18,15 @@
             <div id="country-info">
                 <h1 id="country-name">Country Name</h1>
                 <p id="country-description">Description of the country.</p>
-                <button id="more-info">More Info</button>
             </div>
-            <div id="city-menu" class="city-menu hidden"></div>
+            <div id="city-menu" class="city-menu hidden">
+                <button id="close-menu" class="close-button">&times;</button>
+                <!-- <h2>Cities</h2> -->
+                <!-- City options will be populated here -->
+            </div>
         </div>
+        
+        
         <div class="right">
             <div id="map" class="map"></div>
         </div>
@@ -25,12 +34,14 @@
     <div class="slider">
         <button class="arrow arrow-left">&#9664;</button>
         <div class="city-names">
-            <div class="city-name" id="current-country">Country 1</div>
             <div class="city-name" id="next-country-1">Country 2</div>
+            <div class="city-name" id="current-country">Country 1</div>
             <div class="city-name" id="next-country-2">Country 3</div>
         </div>
         <button class="arrow arrow-right">&#9654;</button>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     
     <script src="script.js"></script>
 </body>

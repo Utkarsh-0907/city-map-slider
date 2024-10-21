@@ -1,4 +1,9 @@
 let countries = [];
+let currentIndex = 0;
+let map;
+let activeInfoWindow = null;
+let currentPolygon = null;
+let markers = [];
 
 function loadKml(url) {
   return fetch(url)
@@ -36,17 +41,21 @@ fetch("countries.json")
   .then((data) => {
     countries = data;
 
-    const savedIndex = localStorage.getItem("currentIndex");
-    currentIndex = savedIndex ? parseInt(savedIndex, 10) : 0;
+    const urlParams = new URLSearchParams(window.location.search);
+    const countryParam = urlParams.get("country");
+    currentIndex = countries.findIndex(
+      (country) => country.name === countryParam
+    );
 
-    updateCountryInfo(); 
+    if (currentIndex === -1) {
+      currentIndex = 0;
+    }
+
+    updateCountryInfo();
   })
   .catch((error) => {
     console.error("There has been a problem with your fetch operation:", error);
   });
-
-let currentIndex = 0;
-let map;
 
 function updateCountryInfo() {
   const country = countries[currentIndex];
@@ -67,6 +76,9 @@ function updateCountryInfo() {
   loadKml(kmlFile)
     .then((kmlCoordinates) => {
       country.countryBounds = kmlCoordinates;
+
+      clearMap();
+
       initMap(country.coordinates, country.cafes, country.countryBounds);
     })
     .catch((error) => {
@@ -75,84 +87,262 @@ function updateCountryInfo() {
 
   document.getElementById("current-country").textContent = country.name;
   document.getElementById("next-country-1").textContent =
-    countries[(currentIndex + 1) % countries.length].name;
+    countries[(currentIndex - 1 + countries.length) % countries.length].name;
   document.getElementById("next-country-2").textContent =
-    countries[(currentIndex + 2) % countries.length].name;
+    countries[(currentIndex + 1) % countries.length].name;
 
   const cityMenu = document.getElementById("city-menu");
-  cityMenu.innerHTML = ""; 
+  cityMenu.innerHTML = "";
   countries.forEach((country, index) => {
     const option = document.createElement("div");
     option.classList.add("city-option");
     option.textContent = country.name;
     option.onclick = () => {
-      currentIndex = index; 
-      localStorage.setItem("currentIndex", currentIndex); 
-      updateCountryInfo();
-      document.getElementById("city-menu").classList.add("hidden");
+      updateCountryWithAnimation(index);
+      cityMenu.classList.add("hidden");
     };
     cityMenu.appendChild(option);
   });
 }
 
-function initMap(center, cafes, countryBounds) {
-  if (map) {
-    map = null;
+function clearMap() {
+  if (currentPolygon) {
+    currentPolygon.setMap(null);
   }
 
-  map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 5,
-    center: center,
-  });
+  markers.forEach((marker) => marker.setMap(null));
+  markers = [];
+}
 
-  const countryPolygon = new google.maps.Polygon({
+function smoothPanTo(target, duration) {
+  const start = map.getCenter();
+  const end = new google.maps.LatLng(target.lat, target.lng);
+  const startTime = new Date().getTime();
+
+  const animate = () => {
+    const now = new Date().getTime();
+    const elapsedTime = now - startTime;
+    const time = Math.min(1, elapsedTime / duration);
+
+    const lat = start.lat() + (end.lat() - start.lat()) * time;
+    const lng = start.lng() + (end.lng() - start.lng()) * time;
+
+    map.setCenter(new google.maps.LatLng(lat, lng));
+
+    if (time < 1) {
+      requestAnimationFrame(animate);
+    }
+  };
+
+  animate();
+}
+
+function initMap(center, cafes, countryBounds) {
+  if (!map) {
+    map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 5,
+      center: center,
+    });
+  } else {
+    smoothPanTo(center, 1000);
+  }
+
+  currentPolygon = new google.maps.Polygon({
     paths: countryBounds,
-    strokeColor: "darkpink",
+    strokeColor: "violet",
     strokeOpacity: 0.8,
     strokeWeight: 2,
-    fillColor: "lightpink",
+    fillColor: "violet",
     fillOpacity: 0.6,
   });
-  countryPolygon.setMap(map);
+  currentPolygon.setMap(map);
+
+  const hotelIcon = {
+    url: "./icons8-google-maps-48.png",
+    scaledSize: new google.maps.Size(30, 30),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(15, 30),
+  };
 
   cafes.forEach((cafe) => {
     const marker = new google.maps.Marker({
       position: cafe.coordinates,
       map: map,
       title: cafe.name,
+      icon: hotelIcon,
     });
+
+    markers.push(marker);
 
     const infowindow = new google.maps.InfoWindow({
-      content: cafe.name,
+      content: createInfoWindowContent(cafe),
+      maxWidth: 300,
     });
 
-    marker.addListener("click", () => {
+    marker.addListener("mouseover", () => {
+      if (activeInfoWindow) {
+        activeInfoWindow.close();
+      }
       infowindow.open(map, marker);
+      activeInfoWindow = infowindow;
+      initializeSlider(cafe.name);
     });
+
+    marker.addListener("mouseout", () => {
+      setTimeout(() => {
+        if (!isMouseOverInfoWindow(infowindow)) {
+          infowindow.close();
+          activeInfoWindow = null;
+        }
+      }, 50);
+    });
+  });
+
+  map.addListener("click", () => {
+    if (activeInfoWindow) {
+      activeInfoWindow.close();
+      activeInfoWindow = null;
+    }
   });
 
   const bounds = new google.maps.LatLngBounds();
   countryBounds.forEach((coord) => bounds.extend(coord));
   cafes.forEach((cafe) => bounds.extend(cafe.coordinates));
   map.fitBounds(bounds);
+
+  const mapElement = document.getElementById("map");
+  mapElement.classList.remove("visible");
+  setTimeout(() => {
+    mapElement.classList.add("visible");
+  }, 0);
+}
+
+function createInfoWindowContent(cafe) {
+  return `
+    <div class="info-window">
+      <div class="slider-container">
+        <button class="slick-prev slick-arrow" aria-label="Previous" type="button">Previous</button>
+        <div class="slider" id="slider-${cafe.name.replace(/\s+/g, "-")}">
+          ${cafe.images
+            .map((img) => `<img src="${img}" alt="${cafe.name}">`)
+            .join("")}
+        </div>
+        <button class="slick-next slick-arrow" aria-label="Next" type="button">Next</button>
+      </div>
+      <h3>${cafe.name}</h3>
+      <p>${cafe.description}</p>
+    </div>
+  `;
+}
+
+function initializeSlider(cafeName) {
+  const sliderId = `#slider-${cafeName.replace(/\s+/g, "-")}`;
+  $(sliderId).slick({
+    dots: true,
+    infinite: true,
+    speed: 1000,
+    fade: true,
+    cssEase: "linear",
+    autoplay: true,
+    autoplaySpeed: 500,
+    prevArrow: $(sliderId).parent().find(".slick-prev"),
+    nextArrow: $(sliderId).parent().find(".slick-next"),
+  });
+}
+
+function isMouseOverInfoWindow(infoWindow) {
+  const infoWindowElement = document.querySelector(".gm-style-iw-c");
+  if (!infoWindowElement) return false;
+  const rect = infoWindowElement.getBoundingClientRect();
+  const mousePosition = { x: event.clientX, y: event.clientY };
+  return (
+    mousePosition.x >= rect.left &&
+    mousePosition.x <= rect.right &&
+    mousePosition.y >= rect.top &&
+    mousePosition.y <= rect.bottom
+  );
+}
+
+function updateCountryWithAnimation(newIndex) {
+  const leftContainer = document.querySelector(".left");
+  leftContainer.classList.add("hidden");
+
+  setTimeout(() => {
+    currentIndex = newIndex;
+    updateUrlParameter("country", countries[currentIndex].name);
+    updateCountryInfo();
+    leftContainer.classList.remove("hidden");
+  }, 500);
+}
+function updateUrlParameter(param, value) {
+  const url = new URL(window.location);
+  url.searchParams.set(param, value);
+  window.history.pushState({}, "", url);
 }
 
 document.querySelector(".arrow-left").addEventListener("click", () => {
-  currentIndex = (currentIndex - 1 + countries.length) % countries.length;
-  localStorage.setItem("currentIndex", currentIndex); 
-  updateCountryInfo();
+  updateCountryWithAnimation(
+    (currentIndex - 1 + countries.length) % countries.length
+  );
 });
 
 document.querySelector(".arrow-right").addEventListener("click", () => {
-  currentIndex = (currentIndex + 1) % countries.length;
-  localStorage.setItem("currentIndex", currentIndex);
-  updateCountryInfo();
+  updateCountryWithAnimation((currentIndex + 1) % countries.length);
 });
+
+document.getElementById("next-country-1").onclick = () => {
+  const newIndex = (currentIndex - 1 + countries.length) % countries.length;
+  updateCountryWithAnimation(newIndex);
+};
+
+document.getElementById("next-country-2").onclick = () => {
+  const newIndex = (currentIndex + 1) % countries.length;
+  updateCountryWithAnimation(newIndex);
+};
 
 document.getElementById("toggler").addEventListener("click", () => {
   const cityMenu = document.getElementById("city-menu");
-  cityMenu.classList.toggle("hidden"); 
-  document.getElementById("country-info").classList.toggle("hidden"); 
-});
+  const countryInfo = document.getElementById("country-info");
 
-updateCountryInfo();
+  if (!cityMenu.classList.contains("visible")) {
+    cityMenu.classList.add("visible");
+    countryInfo.classList.add("hidden");
+    cityMenu.style.display = "flex";
+  } else {
+    cityMenu.classList.remove("visible");
+    countryInfo.classList.remove("hidden");
+
+    setTimeout(() => {
+      cityMenu.style.display = "none";
+    }, 500);
+  }
+
+  if (cityMenu.classList.contains("visible")) {
+    const cityNames = countries.map((country) => country.name);
+    cityMenu.innerHTML = `<button id="close-menu" class="close-button">&times;</button>`;
+
+    cityNames.forEach((city) => {
+      const cityDiv = document.createElement("div");
+      cityDiv.classList.add("city-option");
+      cityDiv.textContent = city;
+      cityDiv.onclick = () => {
+        const index = countries.findIndex((c) => c.name === city);
+        updateCountryWithAnimation(index);
+        cityMenu.classList.remove("visible");
+        countryInfo.classList.remove("hidden");
+        setTimeout(() => {
+          cityMenu.style.display = "none";
+        }, 500);
+      };
+      cityMenu.appendChild(cityDiv);
+    });
+
+    document.getElementById("close-menu").addEventListener("click", () => {
+      cityMenu.classList.remove("visible");
+      countryInfo.classList.remove("hidden");
+      setTimeout(() => {
+        cityMenu.style.display = "none";
+      }, 500);
+    });
+  }
+});
