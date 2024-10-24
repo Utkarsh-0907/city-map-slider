@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Country Explorer</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVjZVh5ox9i-BEgv_rnizdiXnDA1OzQws"></script>
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVjZVh5ox9i-BEgv_rnizdiXnDA1OzQws&callback=initMap" async defer></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
@@ -14,7 +14,10 @@
 <body>
     <div class="container">
         <div class="left">
-            <button id="toggler" class="hamburger">&#9776;</button>
+                
+                <button id="toggler" class="hamburger">&#9776;</button>
+            
+            
             <div id="country-info">
                 <h1 id="country-name">Country Name</h1>
                 <p id="country-description">Description of the country.</p>

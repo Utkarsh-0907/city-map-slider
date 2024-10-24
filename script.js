@@ -4,13 +4,40 @@ let map;
 let activeInfoWindow = null;
 let currentPolygon = null;
 let markers = [];
+let preloadedImages = new Map();
+
+function preloadImages(cafes) {
+  const loadPromises = [];
+
+  cafes.forEach((cafe) => {
+    cafe.images.forEach((imgUrl) => {
+      if (!preloadedImages.has(imgUrl)) {
+        const loadPromise = new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            preloadedImages.set(imgUrl, img);
+            resolve(img);
+          };
+          img.onerror = () =>
+            reject(new Error(`Failed to load image: ${imgUrl}`));
+          img.src = imgUrl;
+        });
+        loadPromises.push(loadPromise);
+      }
+    });
+  });
+
+  return Promise.all(loadPromises);
+}
 
 function loadKml(url) {
-  return fetch(url)
+  const timeout = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error("Timeout loading KML")), 5000)
+  );
+
+  const fetchKml = fetch(url)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!response.ok) throw new Error("Network response was not ok");
       return response.text();
     })
     .then((kmlText) => {
@@ -22,6 +49,7 @@ function loadKml(url) {
         coord.textContent
           .trim()
           .split(" ")
+          .filter((pair) => pair.length > 0)
           .map((pair) => {
             const [lng, lat] = pair.split(",").map(Number);
             return { lat, lng };
@@ -29,32 +57,40 @@ function loadKml(url) {
       );
       return coordinates;
     });
+
+  return Promise.race([fetchKml, timeout]);
 }
 
 fetch("countries.json")
   .then((response) => {
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
+    if (!response.ok) throw new Error("Network response was not ok");
     return response.json();
   })
   .then((data) => {
     countries = data;
-
+    return Promise.all(
+      countries.map((country) =>
+        country.cafes ? preloadImages(country.cafes) : Promise.resolve()
+      )
+    );
+  })
+  .then(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const countryParam = urlParams.get("country");
     currentIndex = countries.findIndex(
       (country) => country.name === countryParam
     );
 
-    if (currentIndex === -1) {
-      currentIndex = 0;
-    }
-
+    if (currentIndex === -1) currentIndex = 0;
     updateCountryInfo();
   })
   .catch((error) => {
-    console.error("There has been a problem with your fetch operation:", error);
+    console.error("Error loading countries or preloading images:", error);
+    const errorDiv = document.createElement("div");
+    errorDiv.setAttribute("class", "error-message");
+    errorDiv.textContent =
+      "Failed to load country data. Please refresh the page.";
+    document.body.appendChild(errorDiv);
   });
 
 function updateCountryInfo() {
@@ -76,9 +112,7 @@ function updateCountryInfo() {
   loadKml(kmlFile)
     .then((kmlCoordinates) => {
       country.countryBounds = kmlCoordinates;
-
       clearMap();
-
       initMap(country.coordinates, country.cafes, country.countryBounds);
     })
     .catch((error) => {
@@ -95,11 +129,11 @@ function updateCountryInfo() {
   cityMenu.innerHTML = "";
   countries.forEach((country, index) => {
     const option = document.createElement("div");
-    option.classList.add("city-option");
+    option.setAttribute("class", "city-option");
     option.textContent = country.name;
     option.onclick = () => {
       updateCountryWithAnimation(index);
-      cityMenu.classList.add("hidden");
+      cityMenu.setAttribute("class", "city-menu hidden");
     };
     cityMenu.appendChild(option);
   });
@@ -142,6 +176,9 @@ function initMap(center, cafes, countryBounds) {
     map = new google.maps.Map(document.getElementById("map"), {
       zoom: 5,
       center: center,
+      mapTypeControl: false,
+      fullscreenControl: false,
+      streetViewControl: false,
     });
   } else {
     smoothPanTo(center, 1000);
@@ -170,6 +207,7 @@ function initMap(center, cafes, countryBounds) {
       map: map,
       title: cafe.name,
       icon: hotelIcon,
+      optimized: true,
     });
 
     markers.push(marker);
@@ -177,32 +215,62 @@ function initMap(center, cafes, countryBounds) {
     const infowindow = new google.maps.InfoWindow({
       content: createInfoWindowContent(cafe),
       maxWidth: 300,
+      disableAutoPan: true,
     });
 
+    let isMouseOverWindow = false;
+    let isMouseOverMarker = false;
+
     marker.addListener("mouseover", () => {
+      isMouseOverMarker = true;
       if (activeInfoWindow) {
         activeInfoWindow.close();
       }
-      infowindow.open(map, marker);
-      activeInfoWindow = infowindow;
-      initializeSlider(cafe.name);
+
+      const imagesToLoad = cafe.images.map((imgUrl) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = resolve;
+          img.onerror = resolve;
+          img.src = imgUrl;
+        });
+      });
+
+      Promise.all(imagesToLoad).then(() => {
+        infowindow.open(map, marker);
+        activeInfoWindow = infowindow;
+        initializeSlider(cafe.name);
+      });
     });
 
     marker.addListener("mouseout", () => {
+      isMouseOverMarker = false;
       setTimeout(() => {
-        if (!isMouseOverInfoWindow(infowindow)) {
+        if (!isMouseOverWindow && !isMouseOverMarker) {
           infowindow.close();
           activeInfoWindow = null;
         }
-      }, 50);
+      }, 100);
     });
-  });
 
-  map.addListener("click", () => {
-    if (activeInfoWindow) {
-      activeInfoWindow.close();
-      activeInfoWindow = null;
-    }
+    google.maps.event.addListener(infowindow, "domready", () => {
+      const windowContent = document.querySelector(".gm-style-iw");
+      if (windowContent) {
+        windowContent.addEventListener("mouseenter", () => {
+          isMouseOverWindow = true;
+        });
+
+        windowContent.addEventListener("mouseleave", () => {
+          isMouseOverWindow = false;
+          setTimeout(() => {
+            if (!isMouseOverMarker && !isMouseOverWindow) {
+              infowindow.close();
+              activeInfoWindow = null;
+            }
+          }, 100);
+        });
+      }
+    });
   });
 
   const bounds = new google.maps.LatLngBounds();
@@ -211,42 +279,73 @@ function initMap(center, cafes, countryBounds) {
   map.fitBounds(bounds);
 
   const mapElement = document.getElementById("map");
-  mapElement.classList.remove("visible");
-  setTimeout(() => {
-    mapElement.classList.add("visible");
-  }, 0);
+  mapElement.setAttribute("class", "map");
+  requestAnimationFrame(() => {
+    mapElement.setAttribute("class", "map visible");
+  });
 }
 
 function createInfoWindowContent(cafe) {
+  const images = cafe.images
+    .map(
+      (img, index) => `
+      <div class="slider-image-container">
+        <img 
+          src="${img}" 
+          alt="${cafe.name}"
+          class="slider-image ${preloadedImages.has(img) ? "loaded" : ""}"
+          loading="${index === 0 ? "eager" : "lazy"}"
+          onload="this.classList.add('loaded')"
+          onerror="this.onerror=null; this.src='placeholder.jpg';"
+        />
+        <div class="image-loader"></div>
+      </div>`
+    )
+    .join("");
+
   return `
     <div class="info-window">
       <div class="slider-container">
         <button class="slick-prev slick-arrow" aria-label="Previous" type="button">Previous</button>
         <div class="slider" id="slider-${cafe.name.replace(/\s+/g, "-")}">
-          ${cafe.images
-            .map((img) => `<img src="${img}" alt="${cafe.name}">`)
-            .join("")}
+          ${images}
         </div>
         <button class="slick-next slick-arrow" aria-label="Next" type="button">Next</button>
       </div>
       <h3>${cafe.name}</h3>
       <p>${cafe.description}</p>
-    </div>
-  `;
+    </div>`;
 }
 
 function initializeSlider(cafeName) {
   const sliderId = `#slider-${cafeName.replace(/\s+/g, "-")}`;
-  $(sliderId).slick({
-    dots: true,
-    infinite: true,
-    speed: 1000,
-    fade: true,
-    cssEase: "linear",
-    autoplay: true,
-    autoplaySpeed: 500,
-    prevArrow: $(sliderId).parent().find(".slick-prev"),
-    nextArrow: $(sliderId).parent().find(".slick-next"),
+  const sliderElement = $(sliderId);
+  const images = sliderElement.find("img").toArray();
+
+  const loadPromises = images.map((img) => {
+    return new Promise((resolve) => {
+      img.onload = () => {
+        img.classList.add("loaded");
+        resolve();
+      };
+      img.onerror = () => resolve();
+      img.src = img.src;
+    });
+  });
+
+  Promise.all(loadPromises).then(() => {
+    sliderElement.slick({
+      dots: true,
+      infinite: true,
+      speed: 500,
+      fade: true,
+      cssEase: "linear",
+      autoplay: true,
+      autoplaySpeed: 3000,
+      lazyLoad: "ondemand",
+      prevArrow: sliderElement.parent().find(".slick-prev"),
+      nextArrow: sliderElement.parent().find(".slick-next"),
+    });
   });
 }
 
@@ -263,17 +362,29 @@ function isMouseOverInfoWindow(infoWindow) {
   );
 }
 
+function showLeftPanel() {
+  const leftContainer = document.querySelector(".left");
+  leftContainer.style.transform = "translateX(0)";
+}
+
+window.onload = () => {
+  const leftContainer = document.querySelector(".left");
+  leftContainer.style.transform = "translateX(0)";
+  showLeftPanel();
+};
+
 function updateCountryWithAnimation(newIndex) {
   const leftContainer = document.querySelector(".left");
-  leftContainer.classList.add("hidden");
+  leftContainer.style.transform = "translateX(-100%)";
 
   setTimeout(() => {
     currentIndex = newIndex;
     updateUrlParameter("country", countries[currentIndex].name);
     updateCountryInfo();
-    leftContainer.classList.remove("hidden");
+    leftContainer.style.transform = "translateX(0)";
   }, 500);
 }
+
 function updateUrlParameter(param, value) {
   const url = new URL(window.location);
   url.searchParams.set(param, value);
@@ -304,32 +415,32 @@ document.getElementById("toggler").addEventListener("click", () => {
   const cityMenu = document.getElementById("city-menu");
   const countryInfo = document.getElementById("country-info");
 
-  if (!cityMenu.classList.contains("visible")) {
-    cityMenu.classList.add("visible");
-    countryInfo.classList.add("hidden");
+  if (cityMenu.getAttribute("class").indexOf("visible") === -1) {
+    cityMenu.setAttribute("class", "city-menu visible");
+    countryInfo.setAttribute("class", "hidden");
     cityMenu.style.display = "flex";
   } else {
-    cityMenu.classList.remove("visible");
-    countryInfo.classList.remove("hidden");
+    cityMenu.setAttribute("class", "city-menu");
+    countryInfo.removeAttribute("class");
 
     setTimeout(() => {
       cityMenu.style.display = "none";
     }, 500);
   }
 
-  if (cityMenu.classList.contains("visible")) {
+  if (cityMenu.getAttribute("class").indexOf("visible") !== -1) {
     const cityNames = countries.map((country) => country.name);
     cityMenu.innerHTML = `<button id="close-menu" class="close-button">&times;</button>`;
 
     cityNames.forEach((city) => {
       const cityDiv = document.createElement("div");
-      cityDiv.classList.add("city-option");
+      cityDiv.setAttribute("class", "city-option");
       cityDiv.textContent = city;
       cityDiv.onclick = () => {
         const index = countries.findIndex((c) => c.name === city);
         updateCountryWithAnimation(index);
-        cityMenu.classList.remove("visible");
-        countryInfo.classList.remove("hidden");
+        cityMenu.setAttribute("class", "city-menu");
+        countryInfo.removeAttribute("class");
         setTimeout(() => {
           cityMenu.style.display = "none";
         }, 500);
@@ -338,8 +449,8 @@ document.getElementById("toggler").addEventListener("click", () => {
     });
 
     document.getElementById("close-menu").addEventListener("click", () => {
-      cityMenu.classList.remove("visible");
-      countryInfo.classList.remove("hidden");
+      cityMenu.setAttribute("class", "city-menu");
+      countryInfo.removeAttribute("class");
       setTimeout(() => {
         cityMenu.style.display = "none";
       }, 500);
